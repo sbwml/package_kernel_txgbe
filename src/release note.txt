@@ -1,0 +1,211 @@
+txgbe-1.3.4.1
+- fix bug that "when vf driver make modules_install, if echo vf of different ports successively，
+  there will be problems with the mailbox lock“.
+- fix bug that When do ethtool -C, if not change any coalesce parameters supported, not return unsupported.
+- fix bug that When do ip link set vf state enable, not return unsupported.
+
+txgbe-1.3.4
+- support redhat 8.7 and 9.1
+- support ubuntu 14.04
+- support kylinV10 Desktop, KylinV10 sp1,sp2, KylinV10_x86_testv3
+- fix bug that "ethtool" shows half duplex when link is down which is not supported.
+- fix bug that the link cannot be up when changing speed from 10G to 1G if veto bit is set.
+- fix bug that setting speed to 100M would assign wrong advertised speed.
+- fix but that calling txgbe_ioctl read/write method would cause kernel panic when accesssing internel phy.
+- fix bugs related veto bit set.
+- fix bugs that Inspur OCP Card can't link up due to firmware and driver access phy at the same time
+- fix bugs of ECC error reset flow.
+- Add support for QAX 10G Optical to electrical module
+- optimiaze driver code.
+
+txgbe-1.3.3
+- support centos 8.6 and centos 9.0 of x86 arch 
+- support linux 5.18.1
+- support openEuler 22.03 and openEuler 4.19.208
+- support uos ulec 20
+- support ubuntu 16.10
+- support centos 6.5-6.10 
+- support suse 11.3
+- fix bug of showing phy link mode by "ethtool ethX"
+- fix bug when using sfp-1g-cu optical module, driver does not get the correct phy link status. 
+- fix bug that when the number of the enabled vfs is 30+, 
+  the vf driver would be installed failed on the latter vf devices.
+- fix bug in SRIOV enable/disable flow
+- fix bug that the number of RSS queues can be incorrectly set larger than the number of cpus
+- fix bug that using "make modules_install" can not depmod driver in some os
+- fix bug that when do reboot looping test, the driver may occasionally access invalid address.
+- fix bug that turning off rx checksum hw offload would lead to incorrect vxlan hw offload.
+- fix bug that when execute "echo 1 > /sys/class/.../sriov_numvfs", the system will hang.
+- fix bug in self diagnostic test by "ethtool -t".
+- fix bug that vf receive hash rule does not work.
+- fix bug that vf promisc mode does not work right.  
+- Add customize led control on oem ssid 0x0085/0x0075/0x0084 device
+- Add initramfs update in Makefile 
+- add support for switching on DISABLE_PACKET_SPLIT
+- make limitation so that command "ethtool -f" can upgrade flash only once.
+- add support for getting/setting fw lldp enable/disable status feature by using command "ethtool --show-priv-flags"
+- add MACRO switch "TXGBE_RECOVER_CHECK" and "TXGBE_DIS_COMP_TIMEOUT" in configure file
+- add pcie aer status print infomation and regroup TXGBE_PCIE_RECOVER macro
+- add support for autoneg on/off switch by using "ethtool -s" when sfp is in 1G speed
+- add tx multicast and broadcast statistic count showing by using "ethtool -S"
+- enable flow director feature when compiling driver with "make kylin" 
+- add support for "ip link show" and "ip link set" for vf port.
+- add lan reset to tx timeout and clean tx irq flow.
+
+known unresolved issues:
+1. SCTP Tx checksum offload bug
+
+txgbe-1.3.2
+- fix bug of pcie recovery flow
+- add pcie recovery flow on/off switch in configure file
+- fix bug of vxlan/geneve hw offload feature. 
+  Add support for vxlan/geneve port number setting in hardware register.
+- add support for oem ssid and svid.
+- add inspur oem ssid 0x0075 support for "ethtool -p". Use speed led to blink.
+- add flash unlock when upgrading image  
+- fix bug when in kr mode, core dumping will occassionally happen while os is booting up.
+- make LRO enable by default
+- fix kernel or os compiling errors:
+	suse15sp3
+	suse12sp5
+	centos8.5 x86
+	centos7.3-7.6
+	
+known unresolved issues:
+1. SCTP Tx checksum offload bug
+
+txgbe-1.3.1
+- fix bug of vxlan hw offload implementation on centos 7.
+- fix bug of geneve dst port error setting when enable geneve hw offload.
+- fix bug of macvlan vf. After adding macvlan, vf cannot add to bridge 1.
+- fix bug of advertise speed error showing by "ethtool -s".
+- fix compiling errors in centos8.5
+
+txgbe-1.3.0
+- fix compiling error on kernel-realtime os
+- fix compiling error on centos 7.0
+- fix bug of the case when two vfs are with the same mac address, ping command would fail.
+- fix bug of "ip link set vf max tx rate speed"     
+- fix bug of the case that link down event in kr mode may occasionally cause kernel call trace in kr mode,  
+- roll back max mtu size to 9414
+- change flow director default mode from perfect mode to 
+  signature mode so that queue vectors can be bound to cpus automatically.
+- add FEC support in kr mode
+- add support for led and polarity configuration in firmware.
+- add NETDEV_F_HW_CSUM feature support
+- turn on/off led light when execute "ifconfig up/down"
+
+txgbe-1.2.3
+- fix pcie-recover flow
+- fix flow director udp port match function bug
+- fix bug of "ethtool -f" 
+- make mtu max supported size to 9710
+- add ITR options selection in configure file
+- fix kernel or os compiling errors:
+	kernel5.10.49
+	centos 8.4
+	centos 7.1 
+	suse12.1
+
+txgbe-1.2.2
+- fix bug of autonegoation between KR board and botong switch chip
+- add support for "ethtool -N xxx ... action"
+- add support for kernel version 5.8.9
+- add support for "ethtool -f xxx" to burn firmware
+- fix bug of vf function in OCP card
+
+txgbe-1.2.1
+- fix bug of "ethtool -p" function with ocp card
+- fix QinQ TCP/UDP packet traffic bug
+
+known unresolved issues:
+1. VXLAN IPv6 tso offload bug 
+2. SCTP Tx checksum offload bug
+
+txgbe-1.2.0
+- adjust input parameters in configure file
+- fix bug of mac related register configurations in kx4/kx mode
+- fix speed change bug of marvell xaui phy when executing "ethtool -s ethName"
+
+txgbe-1.1.18
+- add cl72_prbs control
+- fix bug of backplane down restart an73
+
+txgbe-1.1.17
+- add function which would check link status by polling mode. This can take less time while changing lanport in bond case.
+- fix compiling errors on kylinFt,UOS and so on.
+- add the function of turn on/off speed auto-negotiation in kr/kx mode by ethtool command
+- add support for "ethtool -p" in xaui mode.
+- add support for "ethtool -k rxhash on/off"
+- add TX_EQ configuration set in kx mode
+
+txgbe-1.1.16
+- fix link setup flow during KR/KX4/KX board initialization.
+- fix vxlan tso hw offload function.
+- fix firmware VETO bit detection flow
+- fix kernel or os compiling errors:
+	centos7.1
+	suse12.1
+	NeoKylin6
+	ubuntu17.10
+	arm kylin v10
+-add kylin related compiling options in configuration file.
+
+
+txgbe-1.1.15
+- make the default speed link mode to auto-negotiation in kr mode.
+- uddate pci.ids file
+- fix bug of showing queue list by executing "ethtool -S XXX" 
+- add support for Linux kernel version up to 5.4
+- fix bug of unstable traffic performance in sfi mode when running iperf on loongnix platform
+
+txgbe-1.1.14
+- add pcie recovery flow when pcie link hangs
+- fix bug of ip link vf return
+
+txgbe-1.1.13
+- add support for mac to sgmii support
+- fix bug of tcp traffic in vlan mode.
+- add support for kr mode board.
+- add support for NCSI.
+- add support for wol
+- add suppport for centos8.2 on ARM platform
+- modify driver compiling options in Makefile
+
+txgbe-1.1.12
+- fix bug of mailbox communication between PF and VF
+- add support for RSS hw offload feature in VF
+- modify the default wol status to d
+- add interface of getting the chip current temperature
+- add support for kernel version of 5.3
+- add suppport for centos7.5 on ARM platform
+- fix compiling error on ubuntu16.04
+
+txgbe-1.1.11
+- fix compling error on ARM UOS platform
+
+txgbe-1.1.10
+- fix bug of offline test failure when executing "ethtool -t", adding support for internal loopback funtion
+- add support for centos7.6 on ARM platform
+
+txgbe-1.1.9
+- fix bug of offline test failure when executing "ethtool -t"
+- add support for new subsystemID 2050.
+
+txgbe-1.1.8
+- fix compiling error of kernel version 4.19
+- fix bug of closing Flow director hw offload in FT platform to improve performance
+- add limitation of the mtu size up to 9414
+- remove compiling warnings
+- add support for xaui mode board
+- update Makefile to support driver compiliation on FT/SW(kylin)/SW(deepin) platform
+- add support for "ethtool -p" to control led blink on expected lanport
+- do performance optimazation on FT/SW platform
+- fix compiling error on PowerPC
+
+txgbe-1.1.7
+- fix bug of cannot set rx/tx ring buff to 512
+- fix bug of only executing "ifconfig down/up" after changing mtu size 
+  can make the new mtu size take effect on centos 7.5/7.6 
+- fix compling error on centso 7.6
+ 
