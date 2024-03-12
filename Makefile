@@ -17,7 +17,7 @@ define KernelPackage/txgbe
   TITLE:=Driver for WangXun 10GbE PCI Express ethernet
   SUBMENU:=Network Devices
   VERSION:=$(LINUX_VERSION)+$(PKG_VERSION)-$(BOARD)-$(PKG_RELEASE)
-  DEPENDS:=@PCI_SUPPORT
+  DEPENDS:=@PCI_SUPPORT +kmod-ptp
   FILES:= $(PKG_BUILD_DIR)/src/txgbe.ko
   AUTOLOAD:=$(call AutoProbe,txgbe)
 endef
