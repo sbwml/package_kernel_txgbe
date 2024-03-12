@@ -1,0 +1,28 @@
+--- a/src/txgbe_lib.c
++++ b/src/txgbe_lib.c
+@@ -852,8 +852,13 @@ static int txgbe_alloc_q_vector(struct t
+ 
+ #endif
+ 	/* initialize NAPI */
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0))
++	netif_napi_add_weight(adapter->netdev, &q_vector->napi,
++		       txgbe_poll, 64);
++#else
+ 	netif_napi_add(adapter->netdev, &q_vector->napi,
+ 		       txgbe_poll, 64);
++#endif
+ #ifndef HAVE_NETIF_NAPI_ADD_CALLS_NAPI_HASH_ADD
+ #ifdef HAVE_NDO_BUSY_POLL
+ 	napi_hash_add(&q_vector->napi);
+--- a/src/txgbe_ptp.c
++++ b/src/txgbe_ptp.c
+@@ -811,7 +811,9 @@ static long txgbe_ptp_create_clock(struc
+ 	adapter->ptp_caps.n_ext_ts = 0;
+ 	adapter->ptp_caps.n_per_out = 0;
+ 	adapter->ptp_caps.pps = 0;
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0))
+ 	adapter->ptp_caps.adjfreq = txgbe_ptp_adjfreq;
++#endif
+ 	adapter->ptp_caps.adjtime = txgbe_ptp_adjtime;
+ #ifdef HAVE_PTP_CLOCK_INFO_GETTIME64
+ 	adapter->ptp_caps.gettime64 = txgbe_ptp_gettime64;

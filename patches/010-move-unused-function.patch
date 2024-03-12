@@ -4,7 +4,7 @@
  CONFIG_TXGBE=m
  obj-$(CONFIG_TXGBE) += txgbe.o
  
-+ccflags-y += -Wno-unused-function
++ccflags-y += -Wno-unused-function -Wno-implicit-function-declaration
 +
  define txgbe-y
  	txgbe_main.o
